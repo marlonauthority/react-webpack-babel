@@ -2,17 +2,34 @@ import React, { Component } from "react";
 
 export default class TechList extends Component {
   state = {
-    techs: ["Node.js", "React.js", "React Native"]
+    techs: ["Node.js", "React.js", "React Native"],
+    newTech: ""
+  };
+
+  handleInputChange = e => {
+    this.setState({ newTech: e.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({
+      techs: [...this.state.techs, this.state.newTech],
+      newTech: ""
+    });
   };
 
   render() {
-    console.log(this.state);
+    const { techs, newTech } = this.state;
     return (
-      <ul>
-        <li>Node.js</li>
-        <li>React.js</li>
-        <li>React Native</li>
-      </ul>
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" onChange={this.handleInputChange} value={newTech} />
+        <button type="submit">Enviar</button>
+        <ul>
+          {techs.map(tech => (
+            <li key={tech}>{tech}</li>
+          ))}
+        </ul>
+      </form>
     );
   }
 }
