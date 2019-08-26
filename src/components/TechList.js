@@ -37,6 +37,7 @@ export default class TechList extends Component {
               onDelete={() => this.handleDelete(tech)}
             />
           ))}
+          <TechItem />
         </ul>
       </form>
     );
