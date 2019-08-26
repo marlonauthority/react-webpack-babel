@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import TechItem from "./TechItem";
 
 export default class TechList extends Component {
   state = {
     techs: ["Node.js", "React.js", "React Native"],
     newTech: ""
+  };
+
+  handleDelete = tech => {
+    this.setState({ techs: this.state.techs.filter(t => t != tech) });
   };
 
   handleInputChange = e => {
@@ -26,7 +31,11 @@ export default class TechList extends Component {
         <button type="submit">Enviar</button>
         <ul>
           {techs.map(tech => (
-            <li key={tech}>{tech}</li>
+            <TechItem
+              key={tech}
+              tech={tech}
+              onDelete={() => this.handleDelete(tech)}
+            />
           ))}
         </ul>
       </form>
