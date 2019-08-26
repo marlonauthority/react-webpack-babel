@@ -2,10 +2,41 @@ import React, { Component } from "react";
 import TechItem from "./TechItem";
 
 export default class TechList extends Component {
+  // default props e proptypes em classe eé escrito assim
+  /**
+   * static default props
+   * static proptypes
+   */
+
   state = {
-    techs: ["Node.js", "React.js", "React Native"],
+    techs: [],
     newTech: ""
   };
+
+  // -> Ciclo de vida
+  /**
+   * -> Executado assim que o component aparece em tela
+   * componentDidMount(){}
+   *
+   * -> Executando sempre que houver alteracoes nas props ou no state
+   * componentDidUpdate(prevProps, prevState){}
+   *
+   * -> Executado quando o componente deixar de existir
+   * componenetWilUnmount(){}
+   */
+
+  componentDidMount() {
+    const techs = localStorage.getItem("techs");
+    if (techs) {
+      this.setState({ techs: JSON.parse(techs) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.techs !== this.state.techs) {
+      localStorage.setItem("techs", JSON.stringify(this.state.techs));
+    }
+  }
 
   handleDelete = tech => {
     this.setState({ techs: this.state.techs.filter(t => t != tech) });
@@ -37,7 +68,6 @@ export default class TechList extends Component {
               onDelete={() => this.handleDelete(tech)}
             />
           ))}
-          <TechItem />
         </ul>
       </form>
     );
